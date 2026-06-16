@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file: data:; img-src 'self' file: data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self';" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MD-Room</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app" class="theme-light">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">M</div>
+          <div class="document-heading">
+            <div id="document-title" class="document-title">제목 없음</div>
+            <div id="document-path" class="document-path"></div>
+          </div>
+        </div>
+
+        <div class="toolbar" role="toolbar" aria-label="문서 도구">
+          <button type="button" class="tool-button" data-action="new" title="새 문서">새로</button>
+          <button type="button" class="tool-button" data-action="open" title="열기">열기</button>
+          <button type="button" class="tool-button primary" data-action="save" title="저장">저장</button>
+          <button type="button" class="tool-button" data-action="save-as" title="다른 이름으로 저장">다른 이름</button>
+
+          <div class="separator" aria-hidden="true"></div>
+
+          <div class="segmented" role="tablist" aria-label="보기 모드">
+            <button type="button" class="segment" data-mode="edit" role="tab">편집</button>
+            <button type="button" class="segment active" data-mode="split" role="tab">분할</button>
+            <button type="button" class="segment" data-mode="preview" role="tab">보기</button>
+          </div>
+
+          <label class="theme-picker" for="theme-select">
+            <span class="theme-swatch" aria-hidden="true"></span>
+            <select id="theme-select" class="theme-select" title="테마 선택">
+              <option value="light">기본</option>
+              <option value="vivid">비비드</option>
+              <option value="purple">보라</option>
+              <option value="mono-dark">흑백</option>
+              <option value="mono-light">백흑</option>
+            </select>
+          </label>
+
+          <button type="button" class="tool-button compact" data-action="print" title="인쇄">인쇄</button>
+        </div>
+      </header>
+
+      <nav class="tabbar" aria-label="열린 문서">
+        <div id="tabs" class="tabs" role="tablist"></div>
+      </nav>
+
+      <main id="workspace" class="workspace" data-mode="split">
+        <section class="editor-pane" aria-label="마크다운 편집기">
+          <textarea id="editor" spellcheck="false" placeholder="마크다운을 입력하세요"></textarea>
+        </section>
+        <section class="preview-pane" aria-label="마크다운 미리보기">
+          <article id="preview" class="markdown-body"></article>
+        </section>
+      </main>
+
+      <footer class="statusbar">
+        <div id="save-state" class="status-item">저장됨</div>
+        <div id="document-stats" class="status-item">0 단어 · 0 글자</div>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

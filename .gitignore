@@ -1,0 +1,6 @@
+node_modules/
+dist/
+build/*
+!build/md-room.ico
+*.log
+.DS_Store

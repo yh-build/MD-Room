@@ -1,0 +1,71 @@
+{
+  "name": "md-room",
+  "version": "1.1.4",
+  "description": "A vivid Windows markdown room for viewing and editing markdown files.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "markdown",
+    "editor",
+    "viewer",
+    "electron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "build": {
+    "appId": "com.mdroom.app",
+    "productName": "MD-Room",
+    "icon": "build/md-room.ico",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "md",
+          "markdown",
+          "mdown",
+          "mkd"
+        ],
+        "name": "Markdown Document",
+        "description": "Markdown document",
+        "role": "Editor"
+      }
+    ],
+    "win": {
+      "icon": "build/md-room.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "build/md-room.ico",
+      "uninstallerIcon": "build/md-room.ico",
+      "installerHeaderIcon": "build/md-room.ico"
+    }
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.2.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "sanitize-html": "^2.17.5"
+  },
+  "devDependencies": {
+    "electron": "^42.4.0",
+    "electron-builder": "^26.15.3"
+  }
+}
