@@ -8,6 +8,7 @@ const THEME_ALIASES = {
 };
 
 let nextTabId = 1;
+let mermaidRenderRunId = 0;
 
 function normalizeTheme(theme) {
   const normalized = THEME_ALIASES[theme] || theme;
@@ -92,9 +93,51 @@ function updateStats() {
 function renderPreview() {
   const tab = getActiveTab();
   elements.preview.innerHTML = api.renderMarkdown(tab?.content || '', tab?.filePath || null);
+  renderMermaidDiagrams();
 }
 
 const renderPreviewSoon = debounce(renderPreview, 80);
+
+function configureMermaid() {
+  if (!window.mermaid) return false;
+
+  window.mermaid.initialize({
+    startOnLoad: false,
+    securityLevel: 'strict',
+    theme: state.theme === 'mono-dark' ? 'dark' : 'default',
+    flowchart: {
+      htmlLabels: true,
+      useMaxWidth: true
+    }
+  });
+
+  return true;
+}
+
+async function renderMermaidDiagrams() {
+  const diagrams = Array.from(elements.preview.querySelectorAll('.mermaid'));
+  const runId = ++mermaidRenderRunId;
+
+  if (diagrams.length === 0 || !configureMermaid()) {
+    return;
+  }
+
+  diagrams.forEach((diagram) => {
+    diagram.removeAttribute('data-processed');
+  });
+
+  try {
+    await window.mermaid.run({ nodes: diagrams });
+  } catch (error) {
+    if (runId !== mermaidRenderRunId) return;
+
+    diagrams.forEach((diagram) => {
+      if (diagram.querySelector('svg')) return;
+      diagram.classList.add('mermaid-error');
+      diagram.textContent = `Mermaid render error\n${error?.message || error}`;
+    });
+  }
+}
 
 function renderTabs() {
   elements.tabs.replaceChildren();
@@ -204,6 +247,7 @@ function setTheme(theme) {
   elements.app.classList.remove(...THEME_CLASSES);
   elements.app.classList.add(`theme-${state.theme}`);
   elements.themeSelect.value = state.theme;
+  renderPreview();
 }
 
 function showToast(message) {

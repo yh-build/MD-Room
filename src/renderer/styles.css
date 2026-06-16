@@ -660,6 +660,31 @@ button {
   box-shadow: var(--shadow);
 }
 
+.markdown-body .mermaid {
+  overflow: auto;
+  margin: 0 0 22px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.markdown-body .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-body .mermaid-error {
+  text-align: left;
+  white-space: pre-wrap;
+  color: var(--warm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
 .markdown-body pre code {
   display: block;
   min-width: max-content;

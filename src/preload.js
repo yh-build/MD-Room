@@ -66,6 +66,21 @@ function createMarkdownRenderer() {
     .use(markdownItFootnote)
     .use(markdownItTaskLists, { enabled: false, label: false });
 
+  const defaultFenceRule =
+    md.renderer.rules.fence ||
+    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+
+  md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+    const token = tokens[idx];
+    const language = token.info ? token.info.trim().split(/\s+/)[0].toLowerCase() : '';
+
+    if (language === 'mermaid') {
+      return `<div class="mermaid">${escapeHtml(token.content)}</div>`;
+    }
+
+    return defaultFenceRule(tokens, idx, options, env, self);
+  };
+
   const defaultImageRule = md.renderer.rules.image;
   md.renderer.rules.image = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
@@ -118,6 +133,7 @@ function renderMarkdown(source, filePath) {
       'td',
       'del',
       'input',
+      'div',
       'span',
       'sup',
       'sub'
@@ -127,6 +143,7 @@ function renderMarkdown(source, filePath) {
       img: ['src', 'alt', 'title', 'loading'],
       code: ['class'],
       pre: ['class'],
+      div: ['class'],
       span: ['class'],
       input: ['type', 'checked', 'disabled', 'class'],
       h1: ['id'],
@@ -144,6 +161,7 @@ function renderMarkdown(source, filePath) {
     allowedClasses: {
       code: ['language-*'],
       pre: ['hljs'],
+      div: ['mermaid'],
       span: [/^hljs-/],
       input: ['task-list-item-checkbox'],
       li: ['task-list-item'],
