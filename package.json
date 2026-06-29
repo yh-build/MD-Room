@@ -1,6 +1,6 @@
 {
   "name": "md-room",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "A vivid Windows markdown room for viewing and editing markdown files.",
   "main": "src/main.js",
   "scripts": {

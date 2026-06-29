@@ -1,6 +1,15 @@
 const api = window.markdownApp;
 
-const THEME_CLASSES = ['theme-light', 'theme-vivid', 'theme-purple', 'theme-mono-dark', 'theme-mono-light'];
+const THEME_CLASSES = [
+  'theme-light',
+  'theme-vivid',
+  'theme-pastel',
+  'theme-purple',
+  'theme-grayscale',
+  'theme-comfort',
+  'theme-mono-dark',
+  'theme-mono-light'
+];
 const THEME_ALIASES = {
   dark: 'mono-dark',
   bw: 'mono-dark',
@@ -12,7 +21,9 @@ let mermaidRenderRunId = 0;
 
 function normalizeTheme(theme) {
   const normalized = THEME_ALIASES[theme] || theme;
-  return ['light', 'vivid', 'purple', 'mono-dark', 'mono-light'].includes(normalized) ? normalized : 'light';
+  return ['light', 'vivid', 'pastel', 'purple', 'grayscale', 'comfort', 'mono-dark', 'mono-light'].includes(normalized)
+    ? normalized
+    : 'light';
 }
 
 const state = {
@@ -398,7 +409,10 @@ api.onMenuCommand((command) => {
     'mode-preview': () => setMode('preview'),
     'theme-light': () => setTheme('light'),
     'theme-vivid': () => setTheme('vivid'),
+    'theme-pastel': () => setTheme('pastel'),
     'theme-purple': () => setTheme('purple'),
+    'theme-grayscale': () => setTheme('grayscale'),
+    'theme-comfort': () => setTheme('comfort'),
     'theme-mono-dark': () => setTheme('mono-dark'),
     'theme-mono-light': () => setTheme('mono-light')
   };
